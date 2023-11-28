@@ -25,7 +25,7 @@ int main()
 	/*n1->info();
 	n2->info();*/
 	
-	//n1->connect(*n2);
+	n1->connect(*n2);
 	r1->printRoutingTable();
 	r2->printRoutingTable();
 

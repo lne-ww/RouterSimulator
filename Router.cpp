@@ -27,7 +27,7 @@ Router::Router(std::string _address, std::string _name)
 {
 	for(int i = 0; i < 5; i++)
 	{
-		itfs[i].name = "interface" + i;
+		itfs[i].name = "interface" + std::to_string(i);
 	}
 	// ... name for itfs
 
@@ -73,7 +73,7 @@ bool Router::addDevice(Device* devicePtr)
 	// 把该电脑的itf指向该路由器
 	// 
 	// 路由器
-	// 两个路由器的路由表互相合并
+	// 两个路由器的路由表互相合并(x)
 	// 各新增一条指向对方的路由
 	// 5 itfs at most
 	if (freeItf() != -1)
@@ -86,11 +86,18 @@ bool Router::addDevice(Device* devicePtr)
 		{
 			if (int anotherIndex = routingPtr->freeItf()) // check if another router has a free interface
 			{
+				auto originalRoutingTable = routingTable;
 				// merging table
 				for (auto const& route : routingPtr->routingTable)
-					routingTable.push_back(route);
-				for (auto const& route : routingTable)
-					routingPtr->routingTable.push_back(route);
+				{
+					auto newRoute = Route(route.end, routingPtr->getAddress(), itfs[index]);
+					routingTable.push_back(newRoute);
+				}
+				for (auto const& route : originalRoutingTable)
+				{
+					auto newRoute = Route(route.end, getAddress(), itfs[anotherIndex]);
+					routingPtr->routingTable.push_back(newRoute);
+				}
 				// adding new route respectively
 				Route newRoute1 = Route(devicePtr->getAddress(), devicePtr->getAddress(), itfs[index]);
 				routingTable.push_back(newRoute1);
@@ -127,23 +134,16 @@ bool Router::addDevice(Device* devicePtr)
 
 void Router::printRoutingTable() const
 {
-	std::cout << "Type       Name               Destination        NextHop            Interface" << std::endl;
+	std::cout << "Routing Table of Router " << getName() << ": " << std::endl;
+	std::cout << "Destination        NextHop            Interface" << std::endl;
+	std::cout.setf(std::ios::left);
 	for (std::vector<Route>::const_iterator it = routingTable.begin(); it != routingTable.end(); it++)
 	{
-		std::cout.setf(std::ios::left);
-		if (dynamic_cast<Router*>(it->itf.devicePtr) != nullptr)
-			std::cout << std::setw(11) << "Router";
-		else if (dynamic_cast<Computer*>(it->itf.devicePtr) != nullptr)
-			std::cout << std::setw(11) << "Computer";
-		else continue;
-
-		std::cout << std::setw(19) << it->itf.devicePtr->getName()
-			<< std::setw(19) << it->end
+		std::cout << std::setw(19) << it->end
 			<< std::setw(19) << it->nextHop
 			<< std::setw(19) << it->itf.name
 			<< std::endl;
 	}
-
 }
 
 int Router::freeItf() const
