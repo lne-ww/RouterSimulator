@@ -77,7 +77,6 @@ void Router::addDevice(Device* ptr)
 	// 
 	// 
 	// 
-	Route r()
 	
 }
 
