@@ -5,12 +5,12 @@ Device::Device()
 {
 }
 
-std::string Device::getAddress()
+std::string Device::getAddress() const
 {
 	return address; 
 }
 
-std::string Device::getName()
+std::string Device::getName() const
 {
 	return name;
 }

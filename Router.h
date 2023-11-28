@@ -17,7 +17,9 @@ class Router :
 {
 public:
     Router();
-    virtual bool send(Packet p) override;
+    virtual bool send(Packet p) const override;
+    virtual bool receive(Packet p) const override;
+    void addDevice(Device* ptr);
 private:
     std::vector<Route> routingTable;
 };

@@ -5,9 +5,10 @@ class Device
 {
 public:
 	Device();
-	std::string getAddress();
-	std::string getName();
-	virtual bool send(Packet p) = 0; 
+	std::string getAddress() const;
+	std::string getName() const;
+	virtual bool send(Packet p) const = 0;
+	virtual bool receive(Packet p) const = 0;
 
 private:
 	std::string address;

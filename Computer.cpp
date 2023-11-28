@@ -1,20 +1,20 @@
 #include "Computer.h"
 #include <iostream>
 
-Computer::Computer(std::string _itf)
-	: itf(_itf)
+Computer::Computer(std::string _itf, Router* _routerPtr)
+	: itf(_itf), routerPtr(_routerPtr)
 {
 }
 
-bool Computer::send(Packet p)
+bool Computer::send(Packet p) const
 {
-	if(p.end == this->getAddress())
-	std::cout << "Computer " << this->getName() <<" sent a packet to router: " << p.payload;
+	std::cout << "Computer " << getName() << " sent a packet." << std::endl;
 	return routerPtr->send(p);
 }
 
-bool Computer::receive(Packet p)
+bool Computer::receive(Packet p) const
 {
-	std::cout << "Computer " << this->getName() <<" receive a packet from router: " << p.payload;
-	return 1;
+	std::cout << "Computer " << getName() << " receive a packet from router." << std::endl;
+	std::cout << p;
+	return true;
 }
