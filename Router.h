@@ -21,6 +21,7 @@ public:
     virtual bool receive(Packet p) const override;
     void addDevice(Device* ptr); // connnect in physical way
     Itf* getItfs() { return itfs; }
+    void printRoutingTable() const;
 
 private:
     std::vector<Route> routingTable;

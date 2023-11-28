@@ -10,8 +10,17 @@
 
 int main()
 {
-	Router* r1 = new Router("128.0.0.1", "r1");
-	Computer c1("128.0.0.9", "c1", "c1 interface", r1);
-	r1->addDevice(&c1);
+	Router* r1 = new Router("192.168.1.1", "r1");
+	Computer* pc1 = new Computer("192.168.1.2", "pc1", "pc1 interface", r1);
+	Network* n1 = new Network(r1);
+	n1->addComputer(pc1);
+
+	Router* r2 = new Router("10.1.1.1", "r2");
+	Computer* pc2 = new Computer("10.1.1.2", "pc2", "pc2 interface", r2);
+	Network* n2 = new Network(r2);
+	n2->addComputer(pc2);
+
+	n1->info();
+	n2->info();
 
 }

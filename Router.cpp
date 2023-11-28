@@ -77,4 +77,14 @@ void Router::addDevice(Device* ptr)
 	
 }
 
+void Router::printRoutingTable() const
+{
+	std::cout << "Type";
+	for (std::vector<Route>::const_iterator it = routingTable.begin(); it != routingTable.end(); it++)
+	{
+		it->itf.devicePtr;
+	}
+
+}
+
 
