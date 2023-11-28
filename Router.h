@@ -15,9 +15,6 @@ public:
 class Router :
     public Device
 {
-private:
-    std::vector<Route> routingTable;
-    Itf itfs[5];
 public:
     Router(std::string _address, std::string _name);
     virtual bool send(Packet p) const override;
@@ -26,5 +23,7 @@ public:
     Itf* getItfs() { return itfs; }
     void printRoutingTable() const;
 
-
+private:
+    std::vector<Route> routingTable;
+    Itf itfs[5];
 };

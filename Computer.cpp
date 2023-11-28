@@ -2,8 +2,14 @@
 #include <iostream>
 
 Computer::Computer(std::string _address, std::string _name, const Itf& _itf)
-	:Device(_address, _name), itf(_itf)
+	: Device(_address, _name), itf(_itf)
 {
+}
+
+Computer::Computer(std::string _address, std::string _name, std::string itfName, Device* _devicePtr)
+	:Device(_address, _name)
+{
+	itf = Itf(itfName, _devicePtr);
 }
 
 bool Computer::send(Packet p) const

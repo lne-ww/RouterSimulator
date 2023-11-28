@@ -12,4 +12,5 @@ std::ostream& operator<<(std::ostream& output, const Packet p)
 	output << "end: " << p.end << std::endl;
 	output << "payload: " << p.payload << std::endl;
 	output << "========================================================" << std::endl;
+	return output;
 }

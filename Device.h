@@ -2,17 +2,6 @@
 #include <string>
 #include "Packet.h"
 
-class Itf
-{
-public:
-	
-	Itf() : name(""), devicePtr(nullptr) {}
-	Itf(std::string _name, Device* _devicePtr);
-	std::string name;
-	Device* devicePtr;
-	
-};
-
 class Device
 {
 public:
@@ -27,3 +16,12 @@ private:
 	std::string name;
 };
 
+class Itf
+{
+public:
+	Itf();
+	Itf(std::string _name, Device* _devicePtr);
+
+	std::string name;
+	Device* devicePtr;
+};
