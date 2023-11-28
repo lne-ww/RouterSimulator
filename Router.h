@@ -20,6 +20,8 @@ public:
     virtual bool send(Packet p) const override;
     virtual bool receive(Packet p) const override;
     void addDevice(Device* ptr); // connnect in physical way
+    Itf* getItfs() { return itfs; }
+
 private:
     std::vector<Route> routingTable;
     Itf itfs[5];
