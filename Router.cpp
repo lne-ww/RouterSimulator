@@ -24,6 +24,10 @@ Route::Route(std::string _end, std::string _nextHop, const Itf& itf)
 Router::Router(std::string _address, std::string _name)
 	: Device(_address, _name), routingTable(), itfs()
 {
+	for(int i = 0; i < 5; i++)
+	{
+		itfs[i].name = "interface" + i;
+	}
 	// ... name for itfs
 
 }
@@ -36,7 +40,7 @@ bool Router::send(Packet p) const
 	{
 		if(it->end == p.end)
 		{
-			Router* ptr = dynamic_cast<Router*>(it->devicePtr);
+			Router* ptr = dynamic_cast<Router*>(it->itf.devicePtr);
 			if (ptr != nullptr) // if end is a router
 			{
 				std::cout << "Router " + getName() + " sent a packet to Router " + ptr->getName() << std::endl;
@@ -44,7 +48,7 @@ bool Router::send(Packet p) const
 			}
 			else // sent to a computer
 			{
-				return it->devicePtr->receive(p);
+				return it->itf.devicePtr->receive(p);
 			}
 		}		
 	}
@@ -73,7 +77,6 @@ void Router::addDevice(Device* ptr)
 	// 
 	// 
 	// 
-	Route r()
 	
 }
 
