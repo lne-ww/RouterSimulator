@@ -1,8 +1,8 @@
 #include "Computer.h"
 #include <iostream>
 
-Computer::Computer(std::string _itf, Router* _routerPtr)
-	: itf(_itf), routerPtr(_routerPtr)
+Computer::Computer(std::string _address, std::string _name, std::string _itf, Router* _routerPtr) :
+	Device(_address, _name), itf(_itf), routerPtr(_routerPtr)
 {
 }
 

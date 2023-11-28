@@ -7,7 +7,7 @@ class Computer :
     public Device
 {
 public:
-    Computer(std::string, Router*);
+    Computer(std::string _address, std::string _name, std::string _itf, Router* _routerPtr);
     virtual bool send(Packet p) const override;
     virtual bool receive(Packet p) const override;
     

@@ -1,7 +1,14 @@
 #include "Device.h"
 
-Device::Device()
-	: address(""), name("")
+
+Itf::Itf(std::string _name, Device* _devicePtr)
+	: name(_name), devicePtr(_devicePtr)
+{
+}
+
+
+Device::Device(std::string _address, std::string _name)
+	: address(_address), name(_name)
 {
 }
 

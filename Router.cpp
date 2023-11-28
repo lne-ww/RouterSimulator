@@ -15,15 +15,19 @@ std::string extractRouterAddress(std::string address)
 }
 */
 
-Route::Route(std::string _end, std::string _nextHop, std::string _itfName, Device* ptr)
-	: end(_end), nextHop(_nextHop), itfName(_itfName), devicePtr(ptr)
+
+Route::Route(std::string _end, std::string _nextHop, const Itf& itf)
+	: end(_end), nextHop(_nextHop), itf(itf)
 {
 }
 
-Router::Router()
-	: routingTable()
+Router::Router(std::string _address, std::string _name)
+	: Device(_address, _name), routingTable(), itfs()
 {
+	// ... name for itfs
+
 }
+
 
 bool Router::send(Packet p) const
 {
@@ -56,6 +60,21 @@ bool Router::receive(Packet p) const
 
 void Router::addDevice(Device* ptr)
 {
-	/*Route newRoute(ptr->getAddress, )
-	routingTable.push_back()*/
+	// 检查有无空接口
+	// ...
+	// 根据连的是何种设备来更新路由表
+	// 电脑：
+	// newRoute = Route(ip, ip, 上面分配到的新itf)
+	// 把该电脑的itf指向该路由器
+	// 
+	// 路由器
+	// 两个路由器的路由表互相合并
+	// 各新增一条指向对方的路由
+	// 
+	// 
+	// 
+	Route r()
+	
 }
+
+
