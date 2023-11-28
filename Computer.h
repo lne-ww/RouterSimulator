@@ -7,9 +7,9 @@ class Computer :
     public Device
 {
 public:
-    Computer();
+    Computer(std::string);
     virtual bool send(Packet p) override;
-
+    bool receive(Packet p);
     
 private:
     std::string itf; // interface
