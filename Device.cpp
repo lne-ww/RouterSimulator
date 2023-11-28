@@ -5,7 +5,7 @@ Itf::Itf() : name(""), devicePtr(nullptr)
 {
 }
 
-Itf::Itf(const std::string& _name, Device* _devicePtr)
+Itf::Itf(std::string _name, Device* _devicePtr)
 	: name(_name), devicePtr(_devicePtr)
 {
 }

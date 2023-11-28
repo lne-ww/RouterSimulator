@@ -19,11 +19,12 @@ public:
     Router(std::string _address, std::string _name);
     virtual bool send(Packet p) const override;
     virtual bool receive(Packet p) const override;
-    void addDevice(Device* ptr); // connnect in physical way
+    bool addDevice(Device* ptr); // connnect in physical way
     Itf* getItfs() { return itfs; }
     void printRoutingTable() const;
 
 private:
+    int freeItf() const; // return the first index if free, -1 otherwise
     std::vector<Route> routingTable;
     Itf itfs[5];
 };

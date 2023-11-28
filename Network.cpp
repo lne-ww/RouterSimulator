@@ -19,7 +19,7 @@ void Network::info() const
 {
 	// print a list of devices
 	std::cout << "Router of this network: " << router->getName() << " at " << router->getAddress() << std::endl;
-	std::cout << "Computer in this network: " << std::endl;
+	std::cout << "Computer(s) in this network: " << std::endl;
 	// 5 itfs at most
 	Itf* itfPtr = router->getItfs();
 	int numberOfDevices = 0;
@@ -30,7 +30,7 @@ void Network::info() const
 		if (currentItf->devicePtr != nullptr)
 		{
 			++numberOfDevices;
-			std::cout << currentItf->name << std::endl;
+			std::cout << currentItf->devicePtr->getName() << std::endl;
 		}
 	}
 	if (numberOfDevices == 0)

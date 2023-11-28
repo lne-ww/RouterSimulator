@@ -1,6 +1,7 @@
 #include "Router.h"
 #include "Computer.h"
 #include <iostream>
+#include <iomanip>
 
 /*
 maybe useful
@@ -62,7 +63,7 @@ bool Router::receive(Packet p) const
 	return true;
 }
 
-void Router::addDevice(Device* ptr)
+bool Router::addDevice(Device* devicePtr)
 {
 	// 检查有无空接口
 	// ...
@@ -74,20 +75,85 @@ void Router::addDevice(Device* ptr)
 	// 路由器
 	// 两个路由器的路由表互相合并
 	// 各新增一条指向对方的路由
-	// 
-	// 
-	// 
-	
+	// 5 itfs at most
+	if (freeItf() != -1)
+	{
+		int index = freeItf();
+		//std::cout << "Interface" << index << " is available" << std::endl;
+		itfs[index].devicePtr = devicePtr;
+		Router* routingPtr = dynamic_cast<Router*>(itfs[index].devicePtr);
+		if (routingPtr != nullptr) // if router
+		{
+			if (int anotherIndex = routingPtr->freeItf()) // check if another router has a free interface
+			{
+				// merging table
+				for (auto const& route : routingPtr->routingTable)
+					routingTable.push_back(route);
+				for (auto const& route : routingTable)
+					routingPtr->routingTable.push_back(route);
+				// adding new route respectively
+				Route newRoute1 = Route(devicePtr->getAddress(), devicePtr->getAddress(), itfs[index]);
+				routingTable.push_back(newRoute1);
+				Route newRoute2 = Route(getAddress(), getAddress(), routingPtr->itfs[anotherIndex]);
+				routingPtr->routingTable.push_back(newRoute2);
+				return true;
+				std::cout << "Router " << routingPtr->getName() << " connected to the "
+					<< itfs[index].name << " of Router " << getName() << std::endl;
+			}
+			else
+			{
+				std::cout << "No interface availble, failed to add device." << std::endl;
+				return false;
+			}
+		}
+		else // computer (or device)
+		{
+			Computer* computerPtr = dynamic_cast<Computer*>(itfs[index].devicePtr);
+			if (computerPtr != nullptr)
+			{
+				Route newRoute = Route(computerPtr->getAddress(), computerPtr->getAddress(), itfs[index]);
+				routingTable.push_back(newRoute);
+
+				std::cout << "Computer " << computerPtr->getName() << " connected to the "
+					<< itfs[index].name << " of Router " << getName() << std::endl;
+				return true;
+			}
+		}
+	}
+
+	std::cout << "No interface availble, failed to add device." << std::endl;
+	return false;
 }
 
 void Router::printRoutingTable() const
 {
-	std::cout << "Type";
+	std::cout << "Type       Name               Destination        NextHop            Interface" << std::endl;
 	for (std::vector<Route>::const_iterator it = routingTable.begin(); it != routingTable.end(); it++)
 	{
-		it->itf.devicePtr;
+		std::cout.setf(std::ios::left);
+		if (dynamic_cast<Router*>(it->itf.devicePtr) != nullptr)
+			std::cout << std::setw(11) << "Router";
+		else if (dynamic_cast<Computer*>(it->itf.devicePtr) != nullptr)
+			std::cout << std::setw(11) << "Computer";
+		else continue;
+
+		std::cout << std::setw(19) << it->itf.devicePtr->getName()
+			<< std::setw(19) << it->end
+			<< std::setw(19) << it->nextHop
+			<< std::setw(19) << it->itf.name
+			<< std::endl;
 	}
 
+}
+
+int Router::freeItf() const
+{
+	for (int i = 0; i < 5; ++i)
+	{
+		if (itfs[i].devicePtr == nullptr)
+			return i;
+	}
+	return -1;
 }
 
 

@@ -8,6 +8,8 @@
 #include "Router.h"
 #include "Network.h"
 
+using namespace std;
+
 int main()
 {
 	Router* r1 = new Router("192.168.1.1", "r1");
@@ -20,7 +22,14 @@ int main()
 	Network* n2 = new Network(r2);
 	n2->addComputer(pc2);
 
-	n1->info();
-	n2->info();
+	/*n1->info();
+	n2->info();*/
+	
+	//n1->connect(*n2);
+	r1->printRoutingTable();
+	r2->printRoutingTable();
+
+
+
 
 }
