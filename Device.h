@@ -5,10 +5,12 @@
 class Itf
 {
 public:
+	
 	Itf() : name(""), devicePtr(nullptr) {}
 	Itf(std::string _name, Device* _devicePtr);
 	std::string name;
 	Device* devicePtr;
+	
 };
 
 class Device
