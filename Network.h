@@ -5,7 +5,9 @@ class Network
 {
 public:
 	Network(Router* r);
-	void addComputer(Computer* c);
+	void addComputer(Computer* c) const;
+	void connect(Network other) const;
+	void info() const;
 
 private:
 	Router* router;
