@@ -14,6 +14,11 @@ std::string extractRouterAddress(std::string address)
 }
 */
 
+Router::Router()
+	: routingTable()
+{
+}
+
 bool Router::send(Packet p)
 {
 	std::cout << "router " << this->getName() << " received a packet" << std::endl;
@@ -22,9 +27,14 @@ bool Router::send(Packet p)
 		if(it->end == p.end)
 		{
 			it->devicePtr->send(p);
-			return 1;
+			return true;
 		}		
 	}
 	std::cout << "packet loss" << std::endl;
-	return 0;
+	return false;
+}
+
+Route::Route(std::string _end, std::string _nextHop, std::string _itfName, Device* ptr)
+	: end(_end), nextHop(_nextHop), itfName(_itfName), devicePtr(ptr)
+{
 }

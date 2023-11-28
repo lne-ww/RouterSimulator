@@ -5,6 +5,7 @@
 class Route
 {
 public:
+    Route(std::string _end, std::string _nextHop, std::string _itfName, Device* ptr);
     std::string end;
     std::string nextHop;
     std::string itfName;
@@ -20,4 +21,3 @@ public:
 private:
     std::vector<Route> routingTable;
 };
-
