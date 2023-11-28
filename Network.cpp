@@ -36,5 +36,5 @@ void Network::info() const
 	if (numberOfDevices == 0)
 		std::cout << "No computers in this network now." << std::endl;
 	else
-		std::cout << numberOfDevices << "computer(s) in total." << std::endl;
+		std::cout << numberOfDevices << " computer(s) in total." << std::endl;
 }

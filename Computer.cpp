@@ -10,6 +10,7 @@ Computer::Computer(std::string _address, std::string _name, std::string itfName,
 	:Device(_address, _name)
 {
 	itf = Itf(itfName, _devicePtr);
+	std::cout << "computer " << this->getName() << " added. ip: " << this->getAddress() << std::endl;
 }
 
 bool Computer::send(Packet p) const

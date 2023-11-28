@@ -29,8 +29,7 @@ Router::Router(std::string _address, std::string _name)
 	{
 		itfs[i].name = "interface" + std::to_string(i);
 	}
-	// ... name for itfs
-
+	std::cout << "router " << this->getName() << " added. ip: " << this->getAddress() << std::endl;
 }
 
 
@@ -65,17 +64,6 @@ bool Router::receive(Packet p) const
 
 bool Router::addDevice(Device* devicePtr)
 {
-	// 检查有无空接口
-	// ...
-	// 根据连的是何种设备来更新路由表
-	// 电脑：
-	// newRoute = Route(ip, ip, 上面分配到的新itf)
-	// 把该电脑的itf指向该路由器
-	// 
-	// 路由器
-	// 两个路由器的路由表互相合并(x)
-	// 各新增一条指向对方的路由
-	// 5 itfs at most
 	if (freeItf() != -1)
 	{
 		int index = freeItf();
@@ -103,9 +91,9 @@ bool Router::addDevice(Device* devicePtr)
 				routingTable.push_back(newRoute1);
 				Route newRoute2 = Route(getAddress(), getAddress(), routingPtr->itfs[anotherIndex]);
 				routingPtr->routingTable.push_back(newRoute2);
-				return true;
 				std::cout << "Router " << routingPtr->getName() << " connected to the "
 					<< itfs[index].name << " of Router " << getName() << std::endl;
+				return true;
 			}
 			else
 			{
